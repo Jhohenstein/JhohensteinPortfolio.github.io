@@ -1,33 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jacob Hohenstein's Blog - Home</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="nav-placeholder"></div>
-  <header class="hero-header">
-    <img src="avatar.jpeg" alt="Jacob Hohenstein headshot" class="avatar-headshot">
-    <div class="hero-intro">
-      <h1>Welcome to Jacob's' Blog and Portfolio</h1>
-    </div>
-  </header>
-  <main>
-    <p>
-      Explore software engineering insights, project showcases, and technical articles on web development, programming best practices, and technology trends. Whether you're an aspiring developer, experienced engineer, or tech enthusiast, you'll find practical guides, code samples, and thoughtful commentary to inspire and inform your journey.
-    </p>
-  </main>
-  <div id="footer-placeholder"></div>
-  <script src="main.js"></script>
-  <script>
-    fetch('nav.html').then(r => r.text()).then(html => {
-      document.getElementById('nav-placeholder').innerHTML = html;
-    });
-    fetch('footer.html').then(r => r.text()).then(html => {
-      document.getElementById('footer-placeholder').innerHTML = html;
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jacob Hohenstein's Blog - Home</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="nav-placeholder">
+        <!-- Navigation will be loaded here -->
+      </nav>
+    </header>
+    <main>
+      <section id="hero-section">
+        <header class="hero-header">
+          <img
+            src="avatar.jpeg"
+            alt="Jacob Hohenstein headshot"
+            class="avatar-headshot"
+          />
+          <div class="hero-intro">
+            <h1>Welcome to Jacob's' Blog and Portfolio</h1>
+          </div>
+        </header>
+      </section>
+      <p>
+        Explore software engineering insights, project showcases, and technical
+        articles on web development, programming best practices, and technology
+        trends. Whether you're an aspiring developer, experienced engineer, or
+        tech enthusiast, you'll find practical guides, code samples, and
+        thoughtful commentary to inspire and inform your journey.
+      </p>
+      <!-- Existing main content (blog/article/project previews) -->
+    </main>
+    <footer id="footer-placeholder">
+      <!-- Footer will be loaded here -->
+    </footer>
+    <script src="main.js" defer></script>
+    <script>
+      // DRY: Move nav/footer fetch logic to main.js for all pages
+      // This script is a fallback if JS is disabled or main.js fails
+      document.getElementById("nav-placeholder") &&
+        fetch("nav.html")
+          .then((r) => r.text())
+          .then((html) => {
+            document.getElementById("nav-placeholder").innerHTML = html;
+          });
+      document.getElementById("footer-placeholder") &&
+        fetch("footer.html")
+          .then((r) => r.text())
+          .then((html) => {
+            document.getElementById("footer-placeholder").innerHTML = html;
+          });
+    </script>
+    <noscript>
+      <style>
+        body {
+          background: #222;
+          color: #eee;
+        }
+      </style>
+      <div
+        style="background: #222; color: #eee; padding: 1em; text-align: center"
+      >
+        Navigation and footer require JavaScript enabled.
+      </div>
+    </noscript>
+  </body>
 </html>

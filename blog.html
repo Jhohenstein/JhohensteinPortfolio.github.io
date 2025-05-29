@@ -1,28 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Articles</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="nav-placeholder"></div>
-  <main>
-    <h1>Blog Articles</h1>
-    <div id="blog-list">
-      <!-- Blog articles will be loaded here -->
-    </div>
-  </main>
-  <div id="footer-placeholder"></div>
-  <script src="main.js"></script>
-  <script>
-    fetch('nav.html').then(r => r.text()).then(html => {
-      document.getElementById('nav-placeholder').innerHTML = html;
-    });
-    fetch('footer.html').then(r => r.text()).then(html => {
-      document.getElementById('footer-placeholder').innerHTML = html;
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Articles</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav id="nav-placeholder">
+        <!-- Navigation will be loaded here -->
+      </nav>
+    </header>
+    <main>
+      <h1>Blog Articles</h1>
+      <section>
+        <div id="blog-list">
+          <!-- Blog articles will be loaded here -->
+        </div>
+      </section>
+    </main>
+    <footer id="footer-placeholder">
+      <!-- Footer will be loaded here -->
+    </footer>
+    <script src="main.js" defer></script>
+    <script>
+      // DRY: Move nav/footer fetch logic to main.js for all pages
+      // This script is a fallback if JS is disabled or main.js fails
+      document.getElementById("nav-placeholder") &&
+        fetch("nav.html")
+          .then((r) => r.text())
+          .then((html) => {
+            document.getElementById("nav-placeholder").innerHTML = html;
+          });
+      document.getElementById("footer-placeholder") &&
+        fetch("footer.html")
+          .then((r) => r.text())
+          .then((html) => {
+            document.getElementById("footer-placeholder").innerHTML = html;
+          });
+    </script>
+    <noscript>
+      <style>
+        body {
+          background: #222;
+          color: #eee;
+        }
+      </style>
+      <div
+        style="background: #222; color: #eee; padding: 1em; text-align: center"
+      >
+        Navigation and footer require JavaScript enabled.
+      </div>
+    </noscript>
+  </body>
 </html>
