@@ -66,43 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Home page previews for recent GitHub repos and Medium articles
   if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
-    // GitHub repos preview
     const main = document.querySelector('main');
-    const reposPreviewDiv = document.createElement('section');
-    reposPreviewDiv.innerHTML = '<h2>Recent Projects</h2><div id="repos-preview"><p>Loading...</p></div>';
-    main.appendChild(reposPreviewDiv);
-    fetch('https://api.github.com/users/Jhohenstein/repos?sort=updated')
-      .then(response => response.json())
-      .then(repos => {
-        const preview = document.getElementById('repos-preview');
-        if (!Array.isArray(repos) || repos.length === 0) {
-          preview.innerHTML = '<p>No repositories found.</p>';
-          return;
-        }
-        preview.innerHTML = '';
-        repos.slice(0, 5).forEach(repo => {
-          const repoDiv = document.createElement('div');
-          repoDiv.className = 'repo repo-preview';
-          repoDiv.innerHTML = `
-            <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
-            <p>${repo.description ? repo.description : 'No description provided.'}</p>
-          `;
-          preview.appendChild(repoDiv);
-        });
-      })
-      .catch(() => {
-        const preview = document.getElementById('repos-preview');
-        preview.innerHTML = '<p>Error loading repositories.</p>';
-      });
-
-    // Add 'View More' button for projects
-    const viewMoreProjects = document.createElement('a');
-    viewMoreProjects.href = 'projects.html';
-    viewMoreProjects.className = 'view-more-btn';
-    viewMoreProjects.textContent = 'View More Projects →';
-    reposPreviewDiv.appendChild(viewMoreProjects);
-
-    // Medium articles preview
+    // Medium articles preview FIRST
     const articlesPreviewDiv = document.createElement('section');
     articlesPreviewDiv.innerHTML = '<h2>Recent Blog Articles</h2><div id="articles-preview"><p>Loading...</p></div>';
     main.appendChild(articlesPreviewDiv);
@@ -132,12 +97,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const preview = document.getElementById('articles-preview');
         preview.innerHTML = '<p>Error loading blog articles.</p>';
       });
-
     // Add 'View More' button for blog
     const viewMoreBlog = document.createElement('a');
     viewMoreBlog.href = 'blog.html';
     viewMoreBlog.className = 'view-more-btn';
     viewMoreBlog.textContent = 'View More Articles →';
     articlesPreviewDiv.appendChild(viewMoreBlog);
+
+    // GitHub repos preview SECOND
+    const reposPreviewDiv = document.createElement('section');
+    reposPreviewDiv.innerHTML = '<h2>Recent Projects</h2><div id="repos-preview"><p>Loading...</p></div>';
+    main.appendChild(reposPreviewDiv);
+    fetch('https://api.github.com/users/Jhohenstein/repos?sort=updated')
+      .then(response => response.json())
+      .then(repos => {
+        const preview = document.getElementById('repos-preview');
+        if (!Array.isArray(repos) || repos.length === 0) {
+          preview.innerHTML = '<p>No repositories found.</p>';
+          return;
+        }
+        preview.innerHTML = '';
+        repos.slice(0, 5).forEach(repo => {
+          const repoDiv = document.createElement('div');
+          repoDiv.className = 'repo repo-preview';
+          repoDiv.innerHTML = `
+            <h3><a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a></h3>
+            <p>${repo.description ? repo.description : 'No description provided.'}</p>
+          `;
+          preview.appendChild(repoDiv);
+        });
+      })
+      .catch(() => {
+        const preview = document.getElementById('repos-preview');
+        preview.innerHTML = '<p>Error loading repositories.</p>';
+      });
+    // Add 'View More' button for projects
+    const viewMoreProjects = document.createElement('a');
+    viewMoreProjects.href = 'projects.html';
+    viewMoreProjects.className = 'view-more-btn';
+    viewMoreProjects.textContent = 'View More Projects →';
+    reposPreviewDiv.appendChild(viewMoreProjects);
   }
 });
